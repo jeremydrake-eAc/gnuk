@@ -156,7 +156,7 @@ static const uint8_t config_desc[] = {
   0x00,			  /* bClassEnvelope: 0 */
   0, 0,			  /* wLCDLayout: 0 */
 #if defined(PINPAD_SUPPORT)
-#if defined(PINPAD_CIR_SUPPORT) || defined(PINPAD_DND_SUPPORT)
+#if defined(PINPAD_CIR_SUPPORT) || defined(PINPAD_DND_SUPPORT) || defined(PINPAD_HARDCODE_SUPPORT)
   1,			  /* bPinSupport: with PIN pad (verify) */
 #elif defined(PINPAD_DIAL_SUPPORT)
   3,			  /* bPinSupport: with PIN pad (verify, modify) */
