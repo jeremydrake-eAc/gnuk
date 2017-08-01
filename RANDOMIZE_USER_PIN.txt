@@ -1,0 +1,1 @@
+make DEFS=-DOPENPGP_CARD_INITIAL_PW1=\\\"$(tr -cd '[:alnum:]' < /dev/urandom | fold -w 32 | head -n 1)\\\" -j5
