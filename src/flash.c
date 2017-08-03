@@ -700,6 +700,8 @@ flash_write_binary (uint8_t file_id, const uint8_t *data,
       p = gpg_get_firmware_update_key (file_id - FILEID_UPDATE_KEY_0);
       if (len == 0 && offset == 0)
 	{ /* This means removal of update key.  */
+	  if (flash_check_blank (p, 2)  == 0)
+	    return -1;
 	  if (flash_program_halfword ((uint32_t)p, 0) != 0)
 	    flash_warning ("DO WRITE ERROR");
 	  return 0;
