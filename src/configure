@@ -167,7 +167,7 @@ MEMORY_SIZE=20
 # Settings for TARGET
 case $target in
 BLUE_PILL)
-  flash_override="-DSTM32F103_OVERRIDE_FLASH_SIZE_KB" ;;
+  flash_override="-DSTM32F103_OVERRIDE_FLASH_SIZE_KB=$FLASH_SIZE" ;;
 CQ_STARM|STBEE_MINI)
   if test "$with_dfu" = "default"; then
     with_dfu=yes;
@@ -368,7 +368,7 @@ else
 fi
 
 
-echo -e "DEFS=$use_sys3 $flash_override" '\n'      \
+echo -e "override DEFS+=$use_sys3 $flash_override" '\n'      \
      "$DEBUG_MAKE_OPTION" '\n'  \
      "$PINPAD_MAKE_OPTION" '\n' \
      "$HEXOUTPUT_MAKE_OPTION"   \
