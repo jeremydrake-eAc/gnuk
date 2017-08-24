@@ -266,7 +266,7 @@ class gnuk_token(object):
             ins = 0xd6
         else:
             ins = 0xd0
-        while count*256 < data_len:
+        while count == 0 or count*256 < data_len:
             if count == 0:
                 if len(data) < 128:
                     cmd_data0 = iso7816_compose(ins, 0x80+fileid, 0x00, data[:128])
@@ -512,7 +512,7 @@ class regnual(object):
                                               timeout = 10000)
             r_value = ((res[3]*256 + res[2])*256 + res[1])*256 + res[0]
             if (crc32code ^ r_value) != 0xffffffff:
-                print("failure")
+                print("failure1")
             self.__devhandle.controlMsg(requestType = 0x40, request = 3,
                                         buffer = None,
                                         value = i, index = 0, timeout = 10000)
@@ -522,7 +522,7 @@ class regnual(object):
                                               timeout = 10000)
             r_value = ((res[3]*256 + res[2])*256 + res[1])*256 + res[0]
             if r_value == 0:
-                print("failure")
+                print("failure2")
             i = i+1
             j = j+1
             addr = addr + 256
@@ -539,7 +539,7 @@ class regnual(object):
                                               timeout = 10000)
             r_value = ((res[3]*256 + res[2])*256 + res[1])*256 + res[0]
             if (crc32code ^ r_value) != 0xffffffff:
-                print("failure")
+                print("failure3")
             self.__devhandle.controlMsg(requestType = 0x40, request = 3,
                                         buffer = None,
                                         value = i, index = 0, timeout = 10000)
@@ -549,7 +549,7 @@ class regnual(object):
                                               timeout = 10000)
             r_value = ((res[3]*256 + res[2])*256 + res[1])*256 + res[0]
             if r_value == 0:
-                print("failure")
+                print("failure4")
 
     def protect(self):
         self.__devhandle.controlMsg(requestType = 0x40, request = 4,
@@ -575,7 +575,8 @@ class regnual(object):
             pass
 
 def compare(data_original, data_in_device):
-    if data_original == data_in_device:
+    origfunc = ord if type(data_original)==str else lambda x: x
+    if len(data_original) == len(data_in_device) and all(origfunc(a) == b for a,b in zip(data_original,data_in_device)):
         return True
     raise ValueError("verify failed")
 
